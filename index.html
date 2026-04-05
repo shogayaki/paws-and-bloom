@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paws & Bloom ペットサロン</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fdf8f2;
+      --warm-white: #fffcf7;
+      --sage: #7a9e7e;
+      --sage-light: #a8c5ac;
+      --sage-dark: #4d7253;
+      --terracotta: #c97c5d;
+      --terracotta-light: #e8a98e;
+      --gold: #c8a96e;
+      --charcoal: #2c2c2c;
+      --mid-gray: #6b6b6b;
+      --light-gray: #e8e3dd;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* DEMO BANNER */
+    .demo-banner {
+      background: #2c2c2c;
+      color: #f5e6c8;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 2px solid var(--gold);
+    }
+    .demo-banner span {
+      font-weight: 700;
+      color: var(--terracotta-light);
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--light-gray);
+      position: sticky;
+      top: 42px;
+      z-index: 900;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--sage-dark);
+      letter-spacing: 0.02em;
+    }
+    .logo span {
+      color: var(--terracotta);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--mid-gray);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--sage-dark); }
+
+    .nav-cta {
+      background: var(--terracotta);
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 700 !important;
+      font-size: 0.82rem !important;
+      letter-spacing: 0.06em !important;
+      transition: background 0.25s !important;
+    }
+    .nav-cta:hover { background: var(--terracotta-light) !important; color: white !important; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--warm-white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 80px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--sage);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--sage);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--mid-gray);
+      line-height: 1.8;
+      max-width: 420px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--sage-dark);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      transition: background 0.3s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--sage); transform: translateY(-2px); }
+
+    .btn-secondary {
+      border: 1.5px solid var(--charcoal);
+      color: var(--charcoal);
+      padding: 14px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      background: var(--charcoal);
+      color: white;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--light-gray);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--mid-gray);
+      letter-spacing: 0.06em;
+      margin-top: 2px;
+    }
+
+    .hero-right {
+      position: relative;
+      background: var(--sage-light);
+      overflow: hidden;
+    }
+
+    .hero-illustration {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* SVG illustration for hero */
+    .hero-svg {
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
+    }
+
+    .paw-bg {
+      position: absolute;
+      opacity: 0.06;
+      font-size: 8rem;
+    }
+
+    /* FLOATING BADGE */
+    .floating-badge {
+      position: absolute;
+      bottom: 60px;
+      left: -30px;
+      background: white;
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 10;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .badge-icon { font-size: 2rem; }
+    .badge-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .badge-text span {
+      font-size: 0.72rem;
+      color: var(--mid-gray);
+    }
+
+    /* SECTION COMMONS */
+    section { padding: 100px 80px; }
+
+    .section-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--sage);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+      color: var(--charcoal);
+      margin-bottom: 20px;
+    }
+    h2 em { color: var(--terracotta); font-style: italic; }
+
+    .section-intro {
+      font-size: 1rem;
+      color: var(--mid-gray);
+      line-height: 1.8;
+      max-width: 560px;
+      font-weight: 300;
+    }
+
+    /* SERVICES */
+    .services-section {
+      background: var(--warm-white);
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+    }
+
+    .service-card.featured {
+      background: var(--sage-dark);
+      color: white;
+    }
+    .service-card.featured .service-name,
+    .service-card.featured .service-desc,
+    .service-card.featured .service-price-label { color: rgba(255,255,255,0.85); }
+    .service-card.featured .service-price { color: white; }
+    .service-card.featured .service-icon-wrap { background: rgba(255,255,255,0.15); }
+
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      background: var(--sage-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 24px;
+    }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: var(--charcoal);
+    }
+
+    .service-desc {
+      font-size: 0.88rem;
+      color: var(--mid-gray);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .service-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+    .service-price-label {
+      font-size: 0.72rem;
+      color: var(--mid-gray);
+      letter-spacing: 0.06em;
+    }
+
+    .service-tag {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--terracotta);
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    /* WHY US */
+    .why-section {
+      background: var(--charcoal);
+      color: white;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .why-section h2 { color: white; }
+    .why-section .section-intro { color: rgba(255,255,255,0.65); }
+    .why-section .section-eyebrow { color: var(--sage-light); }
+
+    .why-list {
+      list-style: none;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .why-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .why-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .why-text strong {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      color: white;
+    }
+    .why-text span {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .why-visual {
+      position: relative;
+    }
+
+    .why-card-stack {
+      position: relative;
+      height: 400px;
+    }
+
+    .wcard {
+      position: absolute;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(10px);
+    }
+    .wcard-1 {
+      top: 0; left: 0;
+      width: 70%;
+      animation: floatA 4s ease-in-out infinite;
+    }
+    .wcard-2 {
+      bottom: 0; right: 0;
+      width: 65%;
+      animation: floatB 5s ease-in-out infinite 1s;
+    }
+    @keyframes floatA {
+      0%,100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-12px) rotate(-1deg); }
+    }
+    @keyframes floatB {
+      0%,100% { transform: translateY(0) rotate(2deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    .wcard-emoji { font-size: 2rem; margin-bottom: 12px; }
+    .wcard-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: white; margin-bottom: 6px; }
+    .wcard-sub { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.5; font-weight: 300; }
+
+    /* GALLERY */
+    .gallery-section { background: var(--cream); }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .gallery-header .section-intro {
+      margin: 0 auto;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 16px;
+    }
+
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--sage-light);
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .gallery-item:nth-child(4) { grid-column: span 2; }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+    }
+    .gallery-item:nth-child(1) .gallery-img { min-height: 400px; }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-label {
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    /* Pastel bg colors for gallery */
+    .gallery-item:nth-child(1) { background: #d4e8d4; }
+    .gallery-item:nth-child(2) { background: #f0ddd5; }
+    .gallery-item:nth-child(3) { background: #dde8f0; }
+    .gallery-item:nth-child(4) { background: #f0e8d5; }
+    .gallery-item:nth-child(5) { background: #e8d5e8; }
+
+    /* TESTIMONIALS */
+    .testimonials-section {
+      background: var(--warm-white);
+    }
+
+    .test-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .test-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+    }
+
+    .stars { color: var(--gold); font-size: 1rem; margin-bottom: 16px; }
+
+    .test-text {
+      font-size: 0.9rem;
+      color: var(--mid-gray);
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .test-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      background: var(--sage-light);
+    }
+    .author-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .author-pet {
+      font-size: 0.75rem;
+      color: var(--mid-gray);
+    }
+
+    .quote-mark {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--sage-light);
+      opacity: 0.5;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      background: var(--terracotta);
+      text-align: center;
+      padding: 100px 80px;
+    }
+
+    .cta-section h2 {
+      color: white;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+    .cta-section .btn-white {
+      background: white;
+      color: var(--terracotta);
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      transition: transform 0.2s, box-shadow 0.3s;
+      display: inline-block;
+    }
+    .cta-section .btn-white:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+    }
+
+    /* MAP & INFO */
+    .info-section {
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0;
+    }
+
+    .info-left {
+      padding: 80px;
+      background: var(--warm-white);
+    }
+
+    .info-right {
+      background: var(--sage);
+      padding: 80px;
+      color: white;
+    }
+    .info-right h2 { color: white; font-size: 2rem; }
+    .info-right .section-eyebrow { color: rgba(255,255,255,0.7); }
+
+    .hours-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.88rem;
+    }
+    .hours-row .day { color: rgba(255,255,255,0.7); }
+    .hours-row .time { color: white; font-weight: 700; }
+    .hours-row.closed .time { color: rgba(255,255,255,0.4); }
+
+    .contact-items {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .contact-icon {
+      font-size: 1.2rem;
+      width: 36px;
+    }
+    .contact-detail strong {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 2px;
+    }
+    .contact-detail span {
+      font-size: 0.8rem;
+      color: var(--mid-gray);
+    }
+
+    /* MAP PLACEHOLDER */
+    .map-placeholder {
+      width: 100%;
+      height: 260px;
+      background: linear-gradient(135deg, #d4e8d4 0%, #a8c5ac 50%, #7a9e7e 100%);
+      border-radius: 16px;
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .map-placeholder::after {
+      content: '📍 練習用マップ（架空の住所）';
+      font-size: 0.82rem;
+      color: var(--sage-dark);
+      font-weight: 700;
+      background: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.6);
+      padding: 60px 80px 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-brand .logo { color: white; font-size: 1.4rem; display: block; margin-bottom: 16px; }
+    .footer-brand p {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li {
+      margin-bottom: 10px;
+    }
+    .footer-col a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.82rem;
+      transition: color 0.2s;
+      cursor: default;
+    }
+    .footer-col a:hover { color: rgba(255,255,255,0.8); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+    }
+    .footer-disclaimer {
+      background: rgba(201, 124, 93, 0.2);
+      border: 1px solid rgba(201, 124, 93, 0.3);
+      color: var(--terracotta-light);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    /* SCROLL ANIMATIONS */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { height: 300px; }
+      .hero-left { padding: 60px 24px; }
+      section { padding: 60px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why-section { grid-template-columns: 1fr; padding: 60px 24px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item:nth-child(1) { grid-column: span 2; }
+      .test-grid { grid-template-columns: 1fr; }
+      .info-section { grid-template-columns: 1fr; }
+      .info-left, .info-right { padding: 60px 24px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .cta-section { padding: 60px 24px; }
+      footer { padding: 60px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    ⚠️ <span>これは架空の練習用ウェブサイトです。</span> 実在するペットサロンではありません。電話番号・住所・スタッフ・価格はすべてフィクションです。
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Paws <span>&amp; Bloom</span></div>
+    <ul class="nav-links">
+      <li><a href="#services">サービス</a></li>
+      <li><a href="#about">私たちについて</a></li>
+      <li><a href="#gallery">ギャラリー</a></li>
+      <li><a href="#voice">お客様の声</a></li>
+      <li><a href="#access">アクセス</a></li>
+      <li><a href="#booking" class="nav-cta">予約する</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" style="padding:0; min-height:90vh;">
+    <div class="hero-left">
+      <div class="hero-eyebrow">大阪・北浜の隠れ家サロン</div>
+      <h1>愛犬も猫も、<br><em>極上の</em><br>ひとときを。</h1>
+      <p class="hero-desc">
+        Paws &amp; Bloom は、動物への深い愛情と最新のグルーミング技術を融合させた<br>
+        プレミアムペットサロン。毛並みの美しさだけでなく、心からリラックスできる<br>
+        時間をあなたの大切な家族にお届けします。
+      </p>
+      <div class="hero-btns">
+        <a href="#booking" class="btn-primary">今すぐ予約する</a>
+        <a href="#services" class="btn-secondary">サービスを見る</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">1,200+</div>
+          <div class="stat-label">累計ご利用回数</div>
+        </div>
+        <div>
+          <div class="stat-num">98%</div>
+          <div class="stat-label">お客様満足度</div>
+        </div>
+        <div>
+          <div class="stat-num">8年</div>
+          <div class="stat-label">サロン開業歴</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-illustration">
+        <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+          <!-- Background circle -->
+          <circle cx="200" cy="240" r="160" fill="rgba(255,255,255,0.18)"/>
+          <!-- Dog body -->
+          <ellipse cx="200" cy="290" rx="85" ry="70" fill="#f5e6d3"/>
+          <!-- Head -->
+          <circle cx="200" cy="200" r="62" fill="#f5e6d3"/>
+          <!-- Ears -->
+          <ellipse cx="152" cy="175" rx="24" ry="38" fill="#c8956a" transform="rotate(-12, 152, 175)"/>
+          <ellipse cx="248" cy="175" rx="24" ry="38" fill="#c8956a" transform="rotate(12, 248, 175)"/>
+          <!-- Inner ears -->
+          <ellipse cx="153" cy="176" rx="14" ry="26" fill="#e8b08a" transform="rotate(-12, 153, 176)"/>
+          <ellipse cx="247" cy="176" rx="14" ry="26" fill="#e8b08a" transform="rotate(12, 247, 176)"/>
+          <!-- Eyes -->
+          <circle cx="178" cy="196" r="10" fill="#3d2b1f"/>
+          <circle cx="222" cy="196" r="10" fill="#3d2b1f"/>
+          <circle cx="181" cy="193" r="3.5" fill="white"/>
+          <circle cx="225" cy="193" r="3.5" fill="white"/>
+          <!-- Nose -->
+          <ellipse cx="200" cy="216" rx="12" ry="8" fill="#3d2b1f"/>
+          <!-- Mouth -->
+          <path d="M192 224 Q200 232 208 224" stroke="#3d2b1f" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Paws -->
+          <ellipse cx="150" cy="345" rx="30" ry="22" fill="#f5e6d3"/>
+          <ellipse cx="250" cy="345" rx="30" ry="22" fill="#f5e6d3"/>
+          <!-- Paw toes -->
+          <circle cx="140" cy="338" r="7" fill="#e8d0bc"/>
+          <circle cx="150" cy="334" r="7" fill="#e8d0bc"/>
+          <circle cx="160" cy="338" r="7" fill="#e8d0bc"/>
+          <circle cx="240" cy="338" r="7" fill="#e8d0bc"/>
+          <circle cx="250" cy="334" r="7" fill="#e8d0bc"/>
+          <circle cx="260" cy="338" r="7" fill="#e8d0bc"/>
+          <!-- Tail -->
+          <path d="M285 280 Q320 240 310 210 Q300 190 280 210" stroke="#f5e6d3" stroke-width="18" fill="none" stroke-linecap="round"/>
+          <!-- Bow -->
+          <path d="M195 152 Q200 145 205 152 Q212 158 205 162 Q200 165 195 162 Q188 158 195 152Z" fill="#c97c5d"/>
+          <circle cx="200" cy="157" r="5" fill="#a05540"/>
+          <!-- Bow wings -->
+          <ellipse cx="188" cy="155" rx="10" ry="7" fill="#c97c5d" transform="rotate(-20, 188, 155)"/>
+          <ellipse cx="212" cy="155" rx="10" ry="7" fill="#c97c5d" transform="rotate(20, 212, 155)"/>
+          <!-- Sparkles -->
+          <text x="105" y="130" font-size="20" opacity="0.6">✨</text>
+          <text x="275" y="120" font-size="16" opacity="0.5">🌸</text>
+          <text x="300" y="280" font-size="18" opacity="0.5">⭐</text>
+          <text x="90" y="300" font-size="14" opacity="0.4">💫</text>
+        </svg>
+      </div>
+      <!-- Floating badge -->
+      <div class="floating-badge">
+        <div class="badge-icon">🏅</div>
+        <div class="badge-text">
+          <strong>グルーミング認定資格</strong>
+          <span>日本ペット美容協会 認定サロン（架空）</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section fade-in" id="services">
+    <div class="services-header">
+      <div>
+        <div class="section-eyebrow">メニュー</div>
+        <h2>心を込めた<br><em>グルーミング</em>サービス</h2>
+      </div>
+      <p class="section-intro">すべてのサービスは、ペットの性格・毛質・体調を丁寧に確認してから施術します。</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon-wrap">🛁</div>
+        <div class="service-name">スパ&シャンプー</div>
+        <p class="service-desc">天然成分配合のシャンプーで、毛並みと皮膚の健康を守ります。仕上げにアロマオイルでツヤを出します。</p>
+        <div class="service-price">¥3,500〜</div>
+        <div class="service-price-label">税込 / 体重・犬種により異なります</div>
+      </div>
+      <div class="service-card featured">
+        <div class="service-tag">人気 No.1</div>
+        <div class="service-icon-wrap">✂️</div>
+        <div class="service-name">フルグルーミング</div>
+        <p class="service-desc">シャンプー・ブロー・カット・耳掃除・爪切りが全部含まれた完全ケアプラン。トリミングからスタイリングまで。</p>
+        <div class="service-price">¥7,500〜</div>
+        <div class="service-price-label">税込 / 体重・犬種により異なります</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">🐱</div>
+        <div class="service-name">猫専用コース</div>
+        <p class="service-desc">ストレスに敏感な猫ちゃんのために設計された専用ルームと技術で丁寧にケアします。</p>
+        <div class="service-price">¥4,800〜</div>
+        <div class="service-price-label">税込 / 体重・猫種により異なります</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">💅</div>
+        <div class="service-name">爪カット&ネイルケア</div>
+        <p class="service-desc">爪の状態を確認しながら安全にカット。オプションでカラーネイルも対応しています。</p>
+        <div class="service-price">¥1,200〜</div>
+        <div class="service-price-label">税込</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">🌿</div>
+        <div class="service-name">薬用スキンケア</div>
+        <p class="service-desc">皮膚疾患や乾燥が気になるペットに。獣医師監修の薬用シャンプーを使用した特別ケア。</p>
+        <div class="service-price">¥5,200〜</div>
+        <div class="service-price-label">税込</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">🎀</div>
+        <div class="service-name">記念日スペシャル</div>
+        <p class="service-desc">誕生日・記念日を彩るフォトジェニックなスタイリング。記念撮影サービス付き。</p>
+        <div class="service-price">¥9,800〜</div>
+        <div class="service-price-label">税込</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section fade-in" id="about">
+    <div>
+      <div class="section-eyebrow">私たちの想い</div>
+      <h2>なぜ<em>Paws & Bloom</em><br>が選ばれるのか</h2>
+      <p class="section-intro">ペットは大切な家族の一員。だからこそ、私たちは技術だけでなく、愛情と安心をお届けすることにこだわっています。</p>
+      <ul class="why-list">
+        <li class="why-item">
+          <div class="why-icon">🎓</div>
+          <div class="why-text">
+            <strong>有資格トリマーによる施術</strong>
+            <span>全スタッフが国内外のトリミング資格を保有。定期的な研修で最新技術を習得しています。</span>
+          </div>
+        </li>
+        <li class="why-item">
+          <div class="why-icon">🌱</div>
+          <div class="why-text">
+            <strong>天然・オーガニック素材使用</strong>
+            <span>アレルギーや敏感肌にも安心な、植物由来の製品のみを使用しています。</span>
+          </div>
+        </li>
+        <li class="why-item">
+          <div class="why-icon">📸</div>
+          <div class="why-text">
+            <strong>施術中の見学・ライブカメラ対応</strong>
+            <span>初めてのお預かりも安心。スマートフォンからリアルタイムで確認できます。</span>
+          </div>
+        </li>
+        <li class="why-item">
+          <div class="why-icon">🏥</div>
+          <div class="why-text">
+            <strong>近隣動物病院と連携</strong>
+            <span>緊急時にも素早く対応できるよう、徒歩2分の動物病院と提携しています。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="why-visual">
+      <div class="why-card-stack">
+        <div class="wcard wcard-1">
+          <div class="wcard-emoji">🐶</div>
+          <div class="wcard-title">安心の施術環境</div>
+          <div class="wcard-sub">消毒・換気・専用ルームで<br>一頭ずつ丁寧に対応します</div>
+        </div>
+        <div class="wcard wcard-2">
+          <div class="wcard-emoji">⭐</div>
+          <div class="wcard-title">Googleレビュー 4.9（架空）</div>
+          <div class="wcard-sub">"うちの子が初めてサロンを楽しんでくれました！"<br>— 田中様、柴犬 こむぎちゃん</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section fade-in" id="gallery">
+    <div class="gallery-header">
+      <div class="section-eyebrow">ギャラリー</div>
+      <h2>施術後の<em>笑顔</em>たち</h2>
+      <p class="section-intro">※ すべてのイメージはイラストまたはフィクションです。</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:linear-gradient(135deg,#d4e8d4,#a8c5ac); font-size:6rem;">🐩</div>
+        <div class="gallery-overlay"><div class="gallery-label">トイプードル トリミング</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:linear-gradient(135deg,#f0ddd5,#e8a98e);">🐱</div>
+        <div class="gallery-overlay"><div class="gallery-label">猫 スパコース</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:linear-gradient(135deg,#dde8f0,#a8c0d8);">🐕</div>
+        <div class="gallery-overlay"><div class="gallery-label">ゴールデン フルグルーミング</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:linear-gradient(135deg,#f0e8d5,#d4b896); min-height:180px;">🐾</div>
+        <div class="gallery-overlay"><div class="gallery-label">爪ネイルアート</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:linear-gradient(135deg,#e8d5e8,#c5a8c5);">🎀</div>
+        <div class="gallery-overlay"><div class="gallery-label">記念日スタイリング</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section fade-in" id="voice">
+    <div class="test-header">
+      <div>
+        <div class="section-eyebrow">お客様の声</div>
+        <h2><em>大切</em>なご縁をいただいています</h2>
+      </div>
+      <p class="section-intro">※ 以下のレビューはすべて架空のものです。実在する人物・ペットとは無関係です。</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">トイプードルのモコが、初めてサロンに行ったのにまったく怖がらずに帰ってきました。スタッフさんの接し方が本当に優しくて、次回の予約もすぐ入れました！</p>
+        <div class="test-author">
+          <div class="author-avatar">👩</div>
+          <div>
+            <div class="author-name">山田 花子 様</div>
+            <div class="author-pet">トイプードル「モコ」3歳</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">猫のサクラは超がつくほど怖がりなのですが、ここでは別室で落ち着いて施術してもらえます。カット後の仕上がりもいつも完璧で感動します。</p>
+        <div class="test-author">
+          <div class="author-avatar">👨</div>
+          <div>
+            <div class="author-name">鈴木 一郎 様</div>
+            <div class="author-pet">スコティッシュフォールド「サクラ」5歳</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">老犬のチョコのために薬用スキンケアコースを利用しています。皮膚の状態がみるみる良くなって、毛もふわふわに。先生方の知識と技術に感謝しています。</p>
+        <div class="test-author">
+          <div class="author-avatar">👩‍🦳</div>
+          <div>
+            <div class="author-name">中村 恵子 様</div>
+            <div class="author-pet">ミニチュアダックス「チョコ」11歳</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section fade-in" id="booking">
+    <div class="section-eyebrow" style="color:rgba(255,255,255,0.7);">ご予約</div>
+    <h2>大切な子のために、<br>特別な時間を。</h2>
+    <p>ご予約はお電話またはオンラインフォームから。初回は無料カウンセリング付き。</p>
+    <a href="#" class="btn-white" onclick="alert('これは架空のサロンです。実際の予約はできません。')">予約フォームへ（架空）</a>
+  </section>
+
+  <!-- INFO & ACCESS -->
+  <div class="info-section" id="access">
+    <div class="info-left fade-in">
+      <div class="section-eyebrow">アクセス</div>
+      <h2>サロンへの<br>アクセス</h2>
+      <div class="contact-items" style="margin-top:24px;">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail">
+            <strong>住所（架空）</strong>
+            <span>大阪府大阪市中央区北浜2丁目99-99<br>ブルームビル3F（架空の住所）</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🚃</div>
+          <div class="contact-detail">
+            <strong>アクセス（架空）</strong>
+            <span>地下鉄堺筋線「北浜」駅 2番出口より徒歩3分</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail">
+            <strong>電話番号（架空）</strong>
+            <span>06-0000-0000（実在しない番号）</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-detail">
+            <strong>メール（架空）</strong>
+            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0b62656d644b7b6a7c78266967646466266d62687f64656a67256e736a667b676e25686466">[email&#160;protected]</a></span>
+          </div>
+        </div>
+      </div>
+      <div class="map-placeholder"></div>
+    </div>
+    <div class="info-right fade-in">
+      <div class="section-eyebrow">営業時間</div>
+      <h2>営業時間</h2>
+      <div class="hours-grid">
+        <div class="hours-row">
+          <span class="day">月曜日</span>
+          <span class="time">10:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">火曜日</span>
+          <span class="time">10:00 – 19:00</span>
+        </div>
+        <div class="hours-row closed">
+          <span class="day">水曜日</span>
+          <span class="time">定休日</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">木曜日</span>
+          <span class="time">10:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">金曜日</span>
+          <span class="time">10:00 – 19:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">土曜日</span>
+          <span class="time">09:00 – 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">日曜日・祝日</span>
+          <span class="time">09:00 – 18:00</span>
+        </div>
+      </div>
+      <div style="margin-top: 32px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 12px;">
+        <p style="font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.7;">
+          ⚠️ このサロンは<strong style="color:white;">架空の練習用</strong>です。<br>
+          すべての情報（住所・電話・価格・営業時間）はフィクションです。<br>
+          実際にご来店いただくことはできません。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo">Paws <em style="color:var(--terracotta); font-style:italic;">&amp; Bloom</em></span>
+        <p>大切な家族をお迎えする、<br>北浜の隠れ家ペットサロン。<br>すべての動物に愛情と安心を。<br><br><em>※ これは架空の練習用サイトです。</em></p>
+      </div>
+      <div class="footer-col">
+        <h4>サービス</h4>
+        <ul>
+          <li><a href="#">スパ&シャンプー</a></li>
+          <li><a href="#">フルグルーミング</a></li>
+          <li><a href="#">猫専用コース</a></li>
+          <li><a href="#">スキンケア</a></li>
+          <li><a href="#">記念日プラン</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>サロン情報</h4>
+        <ul>
+          <li><a href="#">私たちについて</a></li>
+          <li><a href="#">スタッフ紹介</a></li>
+          <li><a href="#">よくある質問</a></li>
+          <li><a href="#">ブログ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>お問い合わせ</h4>
+        <ul>
+          <li><a href="#">ご予約（架空）</a></li>
+          <li><a href="#">アクセス</a></li>
+          <li><a href="#">Instagram（架空）</a></li>
+          <li><a href="#">LINE公式（架空）</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Paws &amp; Bloom — 架空のペットサロン（練習用サイト）</span>
+      <div class="footer-disclaimer">⚠️ このサイトは実在しません。練習・デモ用途のみ。</div>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry
